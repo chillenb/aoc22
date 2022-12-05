@@ -10,23 +10,15 @@ int main(int argc, char *argv[]) {
     std::string line;
     std::getline(in, line); in.seekg(0);
     int n = (line.size() + 1) / 4;
-    std::vector<char> arr(n*n+1);
-    int i = 0;
+    std::vector<std::deque<char>> st(n);
     while(true) {
         std::getline(in, line);
         if(line[1] == '1') break;
         for(int j = 0; j < n; j++)
-            arr[i*n+j] = line[j*4 + 1];
-        i++;
+            if(line[4*j+1] != ' ')
+                st[j].push_front(line[4*j+1]);
     }
     std::getline(in, line);
-    std::vector<std::vector<char>> st(n);
-    for(int i = n-1; i >= 0; i--) {
-        for(int j = 0; j < n; j++) {
-            if(arr[i*n+j] != ' ')
-                st[j].push_back(arr[i*n+j]);
-        }
-    }
     int num, src, dest;
     std::stack<char> buf;
     while(getline(in, line)) {
