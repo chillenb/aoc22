@@ -41,16 +41,16 @@ int main() {
         ncol = line.size();
     }
     nrow = data.size() / ncol;
-    std::vector<int> score(nrow*ncol, 1), buf(ncol), buf2(nrow), buf3(nrow), buf4(nrow);
-    std::span ds{data.data(), data.size()}, ss{score.data(), score.size()}, bs{buf.data(), buf.size()};
+    std::vector<int> score(nrow*ncol, 1), buf1(std::max(nrow,ncol)), buf2(nrow), buf3(nrow);
+    std::span ds{data.data(), data.size()}, ss{score.data(), score.size()};
     for(int i = 0; i < nrow; i++)
-        helper2(ds.subspan(i*ncol, ncol), bs, ss.subspan(i*ncol, ncol));
+        helper2(ds.subspan(i*ncol, ncol), buf1, ss.subspan(i*ncol, ncol));
     for(int j = 0; j < ncol; j++) {
         for(int i = 0; i < nrow; i++)
             buf2[i] = data[i*ncol+j];
-        helper2(buf2, buf3, buf4);
+        helper2(buf2, buf3, buf1);
         for(int i = 0; i < nrow; i++)
-            score[i*ncol+j] *= buf4[i];
+            score[i*ncol+j] *= buf1[i];
     }
     std::cout << *std::max_element(score.begin(), score.end()) << "\n";
     return 0;
