@@ -4,6 +4,7 @@
 #include <stack>
 #include <algorithm>
 #include <span>
+// requires C++20
 
 void helper(int* in, int len, int* out) {
     std::stack<int> st;
@@ -27,8 +28,7 @@ void helper2(std::span<int> in, std::span<int> buf, std::span<int> score) {
     std::reverse(score.begin(), score.end());
     std::reverse(in.begin(), in.end());
     helper(in.data(), in.size(), buf.data());
-    for(int i = 0; i < score.size(); i++)
-        score[i] *= buf[i];
+    std::transform(score.begin(), score.end(), buf.begin(), score.begin(), std::multiplies{});
 }
 
 int main() {
@@ -52,8 +52,6 @@ int main() {
         for(int i = 0; i < nrow; i++)
             score[i*ncol+j] *= buf4[i];
     }
-    for(auto i : score)
-        ans = std::max(ans, i);
-    std::cout << ans << "\n";
+    std::cout << *std::max_element(score.begin(), score.end()) << "\n";
     return 0;
 }

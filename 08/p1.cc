@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <numeric>
 
 int main() {
     std::string line;
@@ -38,9 +39,6 @@ int main() {
             rmax = std::max(rmax, data[i*ncol+j]);
         }
     }
-    int ans = 0;
-    for(const bool b: visible)
-        ans += b ? 1 : 0;
-    std::cout << ans << "\n";
+    std::cout << std::transform_reduce(visible.begin(), visible.end(), 0, std::plus{}, [](bool b){return b ? 1 : 0;}) << "\n";
     return 0;
 }
