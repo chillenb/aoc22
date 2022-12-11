@@ -10,7 +10,7 @@ bool check(int n) {
 
 int main() {
     string s;
-    char buf[100], *token;
+    char buf[100];
     vector<char> screen(240, ' ');
     int arg, cyc = 1, ans = 0, crtpos, X = 1;
     while(getline(cin, s)) {
