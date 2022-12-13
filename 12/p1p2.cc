@@ -3,11 +3,12 @@
 #include <string>
 #include <vector>
 #include <array>
+#include <limits.h>
 using namespace std;
 
 int main() {
     string line;
-    int ncol, nrow = 0, startr, startc, endr, endc;
+    int ncol, nrow = 0, startr, startc, endr, endc, ans2 = INT_MAX;
     vector<int> terrain;
     while(cin >> line) {
         ncol = line.size();
@@ -22,7 +23,6 @@ int main() {
         }
         nrow++;
     }
-    
     vector<int> dist_map(terrain.size(), -1);
     dist_map[endr*ncol+endc] = 0;
     queue<int> q; q.push(endr*ncol+endc);
@@ -36,11 +36,10 @@ int main() {
         }
     }
     int ans = dist_map[startr*ncol+startc];
-    cout << ans << "\n";
     for(int i = 0; i < nrow*ncol; i++) {
         if(terrain[i] == 0 && dist_map[i] != -1)
-            ans = std::min(ans, dist_map[i]);
+            ans2 = std::min(ans2, dist_map[i]);
     }
-    cout << ans << "\n";
+    cout << ans << ", " << ans2 << "\n";
     return 0;
 }
